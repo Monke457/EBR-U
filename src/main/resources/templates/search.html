@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="~{fragments/head :: head(title='Search...')}"></div>
+<body>
+
+<!-- header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- content -->
+<div class="content">
+
+  <!-- book results -->
+  <div class="section-wrapper">
+    <h4 class="section-head">Books</h4>
+    <span th:if="${books.size} == 0">No results found</span>
+
+    <div class="grid-main">
+      <div class="grid-card" th:each="book : ${books}">
+        <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
+          <div class="book-cover-wrapper">
+            <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <a class="submit-button" href="/books">Browse books...</a>
+  </div>
+
+
+  <!-- author results -->
+  <div class="section-wrapper">
+    <h4 class="section-head">Authors</h4>
+    <span th:if="${authors.size} == 0">No results found</span>
+    <div class="list-grid">
+      <div th:each="author : ${authors}">
+        <a th:href="@{/authors/{id}(id=${author.id})}" th:text="${author.firstName} + ', ' + ${author.lastName}"></a>
+      </div>
+    </div>
+    <a class="submit-button" href="/authors">Browse authors...</a>
+  </div>
+</div>
+
+
+<!-- footer -->
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="~{fragments/head :: head(title='Admin - Authors')}"></div>
+<body>
+
+<!-- header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- content -->
+<div class="content" th:switch="${formData}">
+
+    <!-- table -->
+    <div class="table-wrapper" th:case="null">
+        <h4 class="sub-header">Author Management</h4>
+        <a class="submit-button"  href="/admin/authors/add">New Author</a>
+        <table class="admin-table">
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Books</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="item : ${results}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.lastName}"></td>
+                <td th:text="${item.firstName}"></td>
+                <td th:text="${item.books.size}"></td>
+                <td><a class="edit-button" th:href="@{/admin/authors/{id}/edit(id=${item.id})}">Edit</a></td>
+                <td>
+                    <form th:action="@{/admin/authors/{id}/delete(id=${item.id})}" method="post">
+                        <input class="delete-button" type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+        <a class="submit-button"  href="/admin">Back</a>
+    </div>
+
+    <!-- form -->
+    <div class="section-wrapper" th:case="*">
+        <h4 class="section-head" th:text="${formData.id} == 0 ? 'New Author' : 'Edit Author'"></h4>
+        <form class="entity-form" th:action="${formData.id} == 0 ? @{add} : @{edit}" th:object="${formData}" method="post">
+            <label>First Name</label><br>
+            <input type="text" th:field="*{firstName}"><br><br>
+            <label>Last Name</label><br>
+            <input type="text" th:field="*{lastName}"><br><br>
+            <div class="button-wrapper">
+                <input class="submit-button" type="submit" name="submit" value="Submit">
+                <a class="submit-button" href="/admin/authors">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

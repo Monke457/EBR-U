@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="~{fragments/head :: head(title='Books')}"></div>
+<body>
+
+<!-- header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="content">
+    <div th:if="${result} != null">
+        <!-- book details -->
+        <div th:if="${similar} == null">
+            <div class="book">
+                <div class="book-left-wrapper">
+                    <h1 class="book-title-mobile" th:text="${result.title}"></h1>
+                    <p class="book-author-mobile" th:text="'By ' + ${result.author}"></p>
+                    <div class="book-rating-mobile">
+                        <span th:each="i: ${#numbers.sequence(0, 4)}">
+                             <i th:if="${result.rating - i >= 1}" class="fa fa-star"></i>
+                            <i th:if="${result.rating - i <= 0}" class="fa fa-star-o"></i>
+                            <i th:if="${result.rating - i < 1} and ${result.rating - i > 0}" class="fa fa-star-half-o"></i>
+                        </span>
+                    </div>
+
+                    <div class="auto-size">
+                        <img class="book-cover" th:src="@{/books/{id}/cover(id=${result.id})}" th:alt="${result.title}">
+                    </div>
+
+                    <form class="sub-form" th:action="@{/books/{id}(id=${result.id})}" method="post">
+                        <p class="book-price" th:text="'Fr. ' + ${#numbers.formatDecimal(result.pricePerDay, 1, 'COMMA', 2, 'POINT')} + ' per day'"></p>
+
+                        <a th:if="${user} == null" class="book-button sub" href="/login">Log in to subscribe</a>
+
+                        <div th:if="${user} != null" th:switch="${subscription}">
+                            <input th:case="null" type="submit" name="submit" class="book-button sub" th:value="Subscribe">
+                            <div th:case="*">
+                                <input type="submit" name="submit" class="book-button unsub" th:value="Unsub">
+                                <a class="book-button sub" th:href="@{/subscriptions/{id}/read(id=${subscription.id})}"><i class="fa fa-book" style="margin-right:5px"></i>Read</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="book-main">
+                    <h1 class="book-title-desktop" th:text="${result.title}"></h1>
+                    <p class="book-author-desktop" th:text="'By ' + ${result.author}"></p>
+                    <div class="book-rating-desktop">
+                        <span th:each="i: ${#numbers.sequence(0, 4)}">
+                             <i th:if="${result.rating - i >= 1}" class="fa fa-star"></i>
+                            <i th:if="${result.rating - i <= 0}" class="fa fa-star-o"></i>
+                            <i th:if="${result.rating - i < 1} and ${result.rating - i > 0}" class="fa fa-star-half-o"></i>
+                        </span>
+                    </div>
+                    <p class="book-synopsis" th:text="${result.synopsis}"></p>
+                    <div class="book-details">
+                        <p th:text="${result.pageCount} + ' pages'"></p>
+                        <p th:text="'Published ' + ${result.publicationDate}"></p>
+                        <p th:text="'ISBN: ' + ${result.isbn}"></p>
+                    </div>
+                </div>
+
+                <div class="book-right-wrapper">
+                    <p class="book-genres-head">Genres</p>
+                    <div th:each="genre : ${result.genres}">
+                        <a class="book-genre" th:href="@{/genres/{id}(id=${genre.id})}" th:text="${genre.name}"></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- related books -->
+            <div class="related-books">
+                <!-- books by genre -->
+                <div th:if="${booksByGenre.size} > 0">
+                    <a class="sub-header" th:href="@{/books/{id}/similar(id=${result.id})}">Readers also like...</a>
+                    <div class="grid-main-small">
+                        <div class="grid-card small-card" th:each="book : ${booksByGenre}">
+                            <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
+                                <div class="book-cover-wrapper">
+                                    <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- books by author -->
+                <div th:if="${booksByAuthor.size} > 0">
+                    <a class="sub-header" th:href="@{/authors/{id}(id=${result.author.id})}" th:text="'More books by ' + ${result.author.firstName} + ' ' + ${result.author.lastName}"></a>
+                    <div class="grid-main-small">
+                        <div class="grid-card small-card" th:each="book : ${booksByAuthor}">
+                            <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
+                                <div class="book-cover-wrapper">
+                                    <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- similar books -->
+        <div class="section-wrapper" th:if="${similar} != null">
+            <h4 class="section-head" th:text="'Books similar to ' + ${result.title} + ' By ' + ${result.author.firstName} + ' ' + ${result.author.lastName}"></h4>
+            <span th:if="${similar.size} == 0">No results found</span>
+
+            <div class="grid-main">
+                <div class="grid-card" th:each="book : ${similar}">
+                    <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
+                        <div class="book-cover-wrapper">
+                            <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <a class="submit-button" href="/books">Browse all...</a>
+        </div>
+    </div>
+
+    <!-- all books -->
+    <div class="section-wrapper" th:if="${results} != null">
+        <h4 class="section-head">All Books</h4>
+        <div class="grid-main" th:switch="${results.size}">
+            <span th:case="0">No results found</span>
+
+            <div class="grid-card" th:each="book : ${results}">
+                <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
+                    <div class="book-cover-wrapper">
+                        <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="~{fragments/head :: head(title='EBR')}"></div>
+<body>
+<!-- header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- content -->
+<div class="content">
+
+    <!-- newly added books @TODO: search for featured -->
+    <div class="section-wrapper">
+        <h4 class="section-head">Featured Books</h4>
+        <div class="grid-main">
+            <div class="grid-card" th:each="book : ${books}">
+                <a th:href="@{/books/{id}(id=${book.id})}">
+                    <div class="book-cover-wrapper">
+                        <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
+                    </div>
+                </a>
+            </div>
+        </div>
+        <a class="submit-button" href="/books">Browse all...</a>
+    </div>
+
+    <!-- open subscriptions -->
+    <div class="section-wrapper" th:if="${subs} != null">
+        <h4 class="section-head">Subscriptions</h4>
+        <div class="grid-main">
+            <div class="grid-card" th:each="sub : ${subs}">
+                <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${sub.book.id})}">
+                    <div class="book-cover-wrapper">
+                        <img class="book-cover" th:src="@{/books/{id}/cover(id=${sub.book.id})}" th:alt="${sub.book.title}">
+                    </div>
+                </a>
+            </div>
+        </div>
+        <a class="submit-button" href="/subscriptions">See all...</a>
+    </div>
+
+    <!-- genres -->
+    <div class="section-wrapper">
+        <h4 class="section-head">Genres</h4>
+        <div style="display:flex;">
+            <div class="list-grid" th:each="genreSet : ${genres}">
+                <div th:each="genre : ${genreSet}">
+                    <a class="l-no-dec" th:href="@{/genres/{id}(id=${genre.id})}" th:text="${genre.name}"></a>
+                </div>
+            </div>
+        </div>
+        <a class="submit-button" href="/genres">See all...</a>
+    </div>
+</div>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+
+</body>
+</html>

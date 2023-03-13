@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="~{fragments/head :: head(title='Authors')}"></div>
+<body>
+
+<!-- header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- content -->
+<div class="content" th:switch="${results}">
+
+    <!-- books by author -->
+    <div class="section-wrapper" th:case="null">
+        <h4 class="section-head" th:text="'Books by ' + ${result.firstName} + ' ' + ${result.lastName}"></h4>
+        <div class="grid-main">
+            <div class="grid-card" th:each="book : ${result.books}">
+                <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
+                    <div class="book-cover-wrapper">
+                        <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
+                    </div>
+                </a>
+            </div>
+        </div>
+        <a class="submit-button" href="/authors">Browse all authors...</a>
+    </div>
+
+    <!-- list authors -->
+    <div class="section-wrapper" th:case="*">
+        <h4 class="section-head">All Authors</h4>
+        <p th:each="author : ${results}">
+            <a th:href="@{/authors/{id}(id=${author.id})}" th:text="${author.firstName} + ' ' + ${author.lastName}"></a>
+        </p>
+    </div>
+</div>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+
+</body>
+</html>

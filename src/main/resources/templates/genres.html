@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="~{fragments/head :: head(title='Genres')}"></div>
+<body>
+
+<!-- header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- content -->
+<div class="content">
+
+  <!-- genres -->
+  <div class="section-wrapper" th:if="${results} != null">
+    <h4 class="section-head">Genres</h4>
+    <form th:action="@{/genres}" th:object="${filterData}" method="post">
+      <input class="checkbox-g" type="checkbox" name="genres" th:each="genre : ${results}" th:text="${genre.name}" th:value="${genre.id}" th:field="*{genreIds}">
+      <br>
+      <input class="submit-button" name="submit" type="submit" value="Filter">
+    </form>
+  </div>
+
+  <!-- books -->
+  <div class="section-wrapper" th:if="${books} != null">
+    <div class="grid-main">
+      <div class="grid-card medium-card" th:each="book : ${books}">
+        <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
+          <div class="book-cover-wrapper">
+            <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!-- footer -->
+<div th:fragment="footer" class="footer" xmlns:th="http://www.w3.org/1999/xhtml">
+    <ul class="footer-list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/books">Books</a></li>
+        <li><a href="/authors">Authors</a></li>
+        <li><a href="/genres">Genres</a></li>
+        <li th:if="${user} != null"><a href="/subscriptions">Subscriptions</a></li>
+        <li th:if="${user} != null and ${user.isAdmin}"><a href="/admin">Admin</a></li>
+    </ul>
+    <div class="footer-right">
+        <a href="/">
+            <img class="footer-icon" src="\img\icon-m.png" alt="ebr_icon_medium">
+        </a>
+        <p>Copyright 2022 BSFH</p>
+    </div>
+</div>

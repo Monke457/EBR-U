@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="~{fragments/head :: head(title='Admin')}"></div>
+<body>
+
+<!-- header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- content -->
+<div class="content">
+    <div class="section-wrapper">
+        <h4 class="section-head">Admin</h4><br>
+        <a href="/admin/books">Books</a><br>
+        <a href="/admin/authors">Authors</a><br>
+        <a href="/admin/genres">Genres</a><br>
+        <a href="/admin/subscriptions">Subscriptions</a><br>
+        <a href="/admin/customers">Customers</a>
+    </div>
+</div>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

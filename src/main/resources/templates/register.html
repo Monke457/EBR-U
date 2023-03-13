@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="~{fragments/head :: head(title='EBR Register')}"></div>
+<body>
+    <div>
+        <div class="logo-wrapper">
+            <a href="/"><img class="login-logo" src="\img\icon-m.png" alt="ebr_icon_medium"></a>
+        </div>
+        <div class="form-wrapper">
+            <form class="login-form" th:action="@{/register}" th:object="${formData}" method="post">
+                <div class="error" th:if="${error} != null">
+                    <p th:text="${error}"></p>
+                </div>
+                <label for="username">Username</label><br>
+                <input type="text" th:field="*{username}" id="username" autofocus required><br><br>
+                <label for="email">Email</label><br>
+                <input type="email" th:field="*{email}" id="email" required><br><br>
+                <label for="password">Password</label><br>
+                <input type="password" th:field="*{password}" id="password" required><br><br>
+                <label for="password">Repeat password</label><br>
+                <input type="password" th:field="*{passwordRepeat}" id="password-repeat" required><br><br>
+                <div class="form-actions">
+                    <input class="login-button" type="submit" name="submit" value="Register">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

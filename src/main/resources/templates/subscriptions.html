@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="~{fragments/head :: head(title='Subscriptions')}"></div>
+<body>
+
+<!-- header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- content -->
+<div class="content">
+
+    <!-- subs results -->
+    <div class="section-wrapper">
+        <h4 class="section-head">Subscriptions</h4>
+        <div th:switch="${results}">
+            <span th:case="null">No results found</span>
+
+            <div th:case="*">
+                <div class="grid-main g-large">
+                    <div class="grid-card c-large" th:each="sub : ${results}">
+                        <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${sub.book.id})}">
+                            <div class="book-cover-wrapper">
+                                <img class="book-cover" th:src="@{/books/{id}/cover(id=${sub.book.id})}" th:alt="${sub.book.title}">
+                            </div>
+                        </a>
+                        <div class="buttons">
+                            <form th:action="@{/subscriptions/{id}(id=${sub.id})}" method="post">
+                                <input type="submit" name="submit" class="book-button unsub b-small" th:value="Unsub">
+                            </form>
+                            <a class="book-button sub b-small" th:href="@{/subscriptions/{id}/read(id=${sub.id})}">Read</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

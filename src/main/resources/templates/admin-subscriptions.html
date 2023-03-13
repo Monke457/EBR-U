@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="~{fragments/head :: head(title='Admin - Subscriptions')}"></div>
+<body>
+
+<!-- header -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- content -->
+<div class="content" th:switch="${formData}">
+
+    <!-- table -->
+    <div class="table-wrapper" th:case="null">
+        <h4 class="sub-header">Subscription Management</h4>
+        <table class="admin-table">
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Book</th>
+                <th>Date Opened</th>
+                <th>Date Closed</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="item : ${results}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.customer.id}"></td>
+                <td th:text="${item.book.id}"></td>
+                <td th:text="${item.dateOpened}"></td>
+                <td th:text="${item.dateClosed}"></td>
+                <td><a class="edit-button" th:href="@{/admin/subscriptions/{id}/edit(id=${item.id})}">Edit</a></td>
+                <td>
+                    <form th:action="@{/admin/subscriptions/{id}/delete(id=${item.id})}" method="post">
+                        <input class="delete-button" type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+        <a class="submit-button" href="/admin">Back</a>
+    </div>
+
+    <!-- form -->
+    <div class="section-wrapper" th:case="*">
+        <h4 class="section-head">Edit Subscription</h4>
+        <form class="entity-form" th:action="@{edit}" th:object="${formData}" method="post">
+            <label>Customer</label><br>
+            <select name="customer">
+                <option th:each="customer : ${customers}" th:text="${customer.username}" th:value="${customer.id}" th:selected="${customer.id} == ${formData.customer.id}"></option>
+            </select><br><br>
+            <label>Book</label><br>
+            <select name="book">
+                <option th:each="book : ${books}" th:selected="${formData.book} != null and ${book.id} == ${formData.book.id}" th:text="${book.title}" th:value="${book.id}"></option>
+            </select><br><br>
+            <label>Date Opened</label><br>
+            <input type="date" th:field="*{dateOpened}"><br><br>
+            <label>Date Closed</label><br>
+            <input type="date" th:field="*{dateClosed}"><br><br>
+            <div class="button-wrapper">
+                <input class="submit-button" type="submit" name="submit" value="Submit">
+                <a class="submit-button" href="/admin/subscriptions">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- footer -->
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+</body>
+</html>

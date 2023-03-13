@@ -1,0 +1,21 @@
+<!-- header -->
+<div th:fragment="header" class="header-bar sticky" id="header-bar" xmlns:th="http://www.w3.org/1999/xhtml">
+    <a href="/">
+        <img class="ebr-icon" src="\img\icon-s.png" alt="ebr-icon">
+    </a>
+
+    <div th:if="${searchData} != null">
+        <form class="search-form" th:action="@{/search}" th:object="${searchData}" method="post">
+            <input class="search-l" type="text" name="search" th:field="*{term}" placeholder="Search">
+            <input class="submit-l" name="submit" type="submit" value="Go">
+        </form>
+    </div>
+
+    <div class="user-icon" th:switch="${user}">
+        <a class="login-icon" th:case="null" href="/login">Login</a>
+        <div th:case="*">
+            <span th:text="${user.username}"></span>
+            <a href="/logout"> Logout</a>
+        </div>
+    </div>
+</div>
