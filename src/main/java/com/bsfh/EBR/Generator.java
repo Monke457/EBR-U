@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Component
 public class Generator {
@@ -28,7 +28,7 @@ public class Generator {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
 
-            if (true) {
+            if (authorService.exists(Author.class)) {
                 logger.info("Using existing database");
                 return;
             }
@@ -50,43 +50,43 @@ public class Generator {
                     hemming, herbert, wilde, orwell});
 
             logger.info("...generating genre entity...");
-            Genre horror = new Genre("Horror");
-            Genre drama = new Genre("Drama");
-            Genre thriller = new Genre("Thriller");
-            Genre romance = new Genre("Romance");
-            Genre comedy = new Genre("Comedy");
-            Genre nonFiction = new Genre("Non Fiction");
-            Genre biography = new Genre("Biography");
-            Genre fantasy = new Genre("Fantasy");
-            Genre sciFi = new Genre("Science Fiction");
-            Genre business = new Genre("Business");
-            Genre classics = new Genre("Classics");
-            Genre mystery = new Genre("Mystery");
-            Genre crime = new Genre("Crime");
-            Genre history = new Genre("History");
-            Genre youngAdult = new Genre("Young Adult");
-            Genre adv = new Genre("Adventure");
-            Genre pol = new Genre("Politics");
+            Genre horror = new Genre("Horror", new HashSet<>());
+            Genre drama = new Genre("Drama", new HashSet<>());
+            Genre thriller = new Genre("Thriller", new HashSet<>());
+            Genre romance = new Genre("Romance", new HashSet<>());
+            Genre comedy = new Genre("Comedy", new HashSet<>());
+            Genre nonFiction = new Genre("Non Fiction", new HashSet<>());
+            Genre biography = new Genre("Biography", new HashSet<>());
+            Genre fantasy = new Genre("Fantasy", new HashSet<>());
+            Genre sciFi = new Genre("Science Fiction", new HashSet<>());
+            Genre business = new Genre("Business", new HashSet<>());
+            Genre classics = new Genre("Classics", new HashSet<>());
+            Genre mystery = new Genre("Mystery", new HashSet<>());
+            Genre crime = new Genre("Crime", new HashSet<>());
+            Genre history = new Genre("History", new HashSet<>());
+            Genre youngAdult = new Genre("Young Adult", new HashSet<>());
+            Genre adv = new Genre("Adventure", new HashSet<>());
+            Genre pol = new Genre("Politics", new HashSet<>());
             genreService.createAll(new Genre[]{horror, drama, thriller, romance, comedy, nonFiction, biography, biography,
                     fantasy, sciFi, business, classics, mystery, crime, history, youngAdult, adv, pol});
 
             logger.info("...generating cover entity...");
-            BlobFile cover1984 = new BlobFile("1984", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/1984.jpg").readAllBytes()));
-            BlobFile itCover = new BlobFile("it", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/it.jpg").readAllBytes()));
-            BlobFile anFarmCover = new BlobFile("animal-farm", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/animal-farm.jpg").readAllBytes()));
-            BlobFile codCover = new BlobFile("children-of-dune", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/cod.jpg").readAllBytes()));
-            BlobFile cosCover = new BlobFile("chamber-of-secrets", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/cos.jpg").readAllBytes()));
-            BlobFile dorianCover = new BlobFile("dorian-grey", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/dorian.jpg").readAllBytes()));
-            BlobFile duneCover = new BlobFile("dune", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/dune.jpg").readAllBytes()));
-            BlobFile messiahCover = new BlobFile("dune-messiah", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/dunemess.jpg").readAllBytes()));
-            BlobFile fotrCover = new BlobFile("fellowship-of-the-ring", "image/png", new SerialBlob(getClass().getResourceAsStream("/static/img/fotr.png").readAllBytes()));
-            BlobFile ggCover = new BlobFile("great-gatsby", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/gg.jpg").readAllBytes()));
-            BlobFile gotCover = new BlobFile("game-of-thrones", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/got.jpg").readAllBytes()));
-            BlobFile metaCover = new BlobFile("metamorphosis", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/meta.jpg").readAllBytes()));
-            BlobFile northCover = new BlobFile("northern-lights", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/northern-lights.jpg").readAllBytes()));
-            BlobFile omatsCover = new BlobFile("old-man-and-the-sea", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/omats.jpg").readAllBytes()));
-            BlobFile psCover = new BlobFile("philosophers-stone", "image/jpg", new SerialBlob(getClass().getResourceAsStream("/static/img/ps.jpg").readAllBytes()));
-            BlobFile ttCover = new BlobFile("two-towers", "image/jpeg", new SerialBlob(getClass().getResourceAsStream("/static/img/tt.jpeg").readAllBytes()));
+            BlobFile cover1984 = new BlobFile("1984", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/1984.jpg")).readAllBytes()), null);
+            BlobFile itCover = new BlobFile("it", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/it.jpg")).readAllBytes()), null);
+            BlobFile anFarmCover = new BlobFile("animal-farm", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/animal-farm.jpg")).readAllBytes()), null);
+            BlobFile codCover = new BlobFile("children-of-dune", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/cod.jpg")).readAllBytes()), null);
+            BlobFile cosCover = new BlobFile("chamber-of-secrets", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/cos.jpg")).readAllBytes()), null);
+            BlobFile dorianCover = new BlobFile("dorian-grey", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/dorian.jpg")).readAllBytes()), null);
+            BlobFile duneCover = new BlobFile("dune", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/dune.jpg")).readAllBytes()), null);
+            BlobFile messiahCover = new BlobFile("dune-messiah", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/dunemess.jpg")).readAllBytes()), null);
+            BlobFile fotrCover = new BlobFile("fellowship-of-the-ring", "image/png", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/fotr.png")).readAllBytes()), null);
+            BlobFile ggCover = new BlobFile("great-gatsby", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/gg.jpg")).readAllBytes()), null);
+            BlobFile gotCover = new BlobFile("game-of-thrones", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/got.jpg")).readAllBytes()), null);
+            BlobFile metaCover = new BlobFile("metamorphosis", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/meta.jpg")).readAllBytes()), null);
+            BlobFile northCover = new BlobFile("northern-lights", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/northern-lights.jpg")).readAllBytes()), null);
+            BlobFile omatsCover = new BlobFile("old-man-and-the-sea", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/omats.jpg")).readAllBytes()), null);
+            BlobFile psCover = new BlobFile("philosophers-stone", "image/jpg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/ps.jpg")).readAllBytes()), null);
+            BlobFile ttCover = new BlobFile("two-towers", "image/jpeg", new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/img/tt.jpeg")).readAllBytes()), null);
 
             blobService.createAll(new BlobFile[]{cover1984, itCover, anFarmCover, codCover,
                     cosCover, dorianCover, duneCover, messiahCover, fotrCover, ggCover,
@@ -103,8 +103,9 @@ public class Generator {
                     3.2f,
                     itCover,
                     king,
-                    new HashSet<>(Arrays.asList(horror, thriller)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(horror, thriller),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book harryPotter1 = new Book("Harry Potter and the Philosopher's Stone",
                     LocalDate.of(1997, 6,26),
@@ -115,8 +116,9 @@ public class Generator {
                     4.5f,
                     psCover,
                     rowling,
-                    new HashSet<>(Arrays.asList(fantasy, youngAdult)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy, youngAdult),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book harryPotter2 = new Book("Harry Potter and the Chamber of Secrets",
                     LocalDate.of(1998, 7,2),
@@ -127,8 +129,9 @@ public class Generator {
                     4.3f,
                     cosCover,
                     rowling,
-                    new HashSet<>(Arrays.asList(fantasy, youngAdult)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy, youngAdult),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book northernLights = new Book("Northern Lights",
                     LocalDate.of(1995, 7,9),
@@ -139,8 +142,9 @@ public class Generator {
                     3.8f,
                     northCover,
                     pullman,
-                    new HashSet<>(Arrays.asList(fantasy, youngAdult)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy, youngAdult),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book lotr1 = new Book("The Fellowship of the Ring",
                     LocalDate.of(1954, 7,29),
@@ -151,8 +155,9 @@ public class Generator {
                     4.9f,
                     fotrCover,
                     tolkien,
-                    new HashSet<>(Collections.singletonList(fantasy)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book lotr2 = new Book("The Two Towers",
                     LocalDate.of(1954, 11,11),
@@ -163,8 +168,9 @@ public class Generator {
                     4.8f,
                     ttCover,
                     tolkien,
-                    new HashSet<>(Collections.singletonList(fantasy)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book got = new Book("A Game of Thrones",
                     LocalDate.of(1996, 8,1),
@@ -175,8 +181,9 @@ public class Generator {
                     4f,
                     gotCover,
                     martin,
-                    new HashSet<>(Collections.singletonList(fantasy)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book gatsby = new Book("The Great Gatsby",
                     LocalDate.of(1925, 4, 10),
@@ -187,8 +194,9 @@ public class Generator {
                     4f,
                     ggCover,
                     fitz,
-                    new HashSet<>(Arrays.asList(classics, romance)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(classics, romance),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book meta = new Book("The Metamorphosis",
                     LocalDate.of(1915, 1, 1),
@@ -200,8 +208,9 @@ public class Generator {
                     3.8f,
                     metaCover,
                     kafka,
-                    new HashSet<>(Arrays.asList(classics, fantasy)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(classics, fantasy),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book oldMan = new Book("The Old Man and the Sea",
                     LocalDate.of(1952, 9, 1),
@@ -212,8 +221,9 @@ public class Generator {
                     4f,
                     omatsCover,
                     hemming,
-                    new HashSet<>(Arrays.asList(classics, adv)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(classics, adv),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book dune = new Book("Dune",
                     LocalDate.of(1965, 6, 1),
@@ -225,8 +235,9 @@ public class Generator {
                     4.2f,
                     duneCover,
                     herbert,
-                    new HashSet<>(Arrays.asList(fantasy, sciFi, classics, adv)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy, sciFi, classics, adv),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book dune2 = new Book("Dune Messiah",
                     LocalDate.of(1969, 7, 1),
@@ -237,8 +248,9 @@ public class Generator {
                     3.8f,
                     messiahCover,
                     herbert,
-                    new HashSet<>(Arrays.asList(fantasy, sciFi, classics)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy, sciFi, classics),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book dune3 = new Book("Children of Dune",
                     LocalDate.of(1976, 4, 21),
@@ -250,8 +262,9 @@ public class Generator {
                     3.9f,
                     codCover,
                     herbert,
-                    new HashSet<>(Arrays.asList(fantasy, sciFi, classics)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy, sciFi, classics),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book dorian = new Book("The Picture of Dorian Gray",
                     LocalDate.of(1980, 7, 1),
@@ -262,8 +275,9 @@ public class Generator {
                     4.1f,
                     dorianCover,
                     wilde,
-                    new HashSet<>(Arrays.asList(fantasy, classics, horror)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy, classics, horror),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book animal = new Book("Animal Farm",
                     LocalDate.of(1945, 8, 17),
@@ -275,8 +289,9 @@ public class Generator {
                     3.9f,
                     anFarmCover,
                     orwell,
-                    new HashSet<>(Arrays.asList(fantasy, classics, pol)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(fantasy, classics, pol),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
 
             Book nineteen = new Book("1984",
                     LocalDate.of(1949, 7, 8),
@@ -287,13 +302,14 @@ public class Generator {
                     4.9f,
                     cover1984,
                     orwell,
-                    new HashSet<>(Arrays.asList(classics, sciFi, pol)),
-                    new SerialBlob(getClass().getResourceAsStream("/static/book/sample1.epub").readAllBytes()));
+                    Set.of(classics, sciFi, pol),
+                    new HashSet<>(),
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
             bookService.createAll(new Book[]{it, harryPotter1, harryPotter2, northernLights, lotr1,
                     lotr2, got, gatsby, meta, oldMan, dune, dune2, dune3, dorian, animal, nineteen});
 
-            Customer user = new Customer("user", encoder.encode("user"), "user@user123.com", false);
-            Customer admin = new Customer("admin", encoder.encode("admin"), "admin@admin123.com", true);
+            Customer user = new Customer("user", encoder.encode("user"), "user@user123.com", false, new HashSet<>());
+            Customer admin = new Customer("admin", encoder.encode("admin"), "admin@admin123.com", true, new HashSet<>());
             customerService.createAll(new Customer[]{user, admin});
 
             Subscription sub1 = new Subscription(LocalDate.now(), null, user, lotr1);

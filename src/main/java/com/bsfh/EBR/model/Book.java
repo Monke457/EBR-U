@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UuidGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Blob;
@@ -35,21 +33,23 @@ public class Book implements DBEntity{
     private float pricePerDay;
     private String isbn;
     private float rating;
-
     @OneToOne
     private BlobFile cover;
-
     @ManyToOne
-    @JoinColumn(name = "author_id")
     private Author author;
-
     @ManyToMany
+    @JoinTable(
+            name = "book_genres",
+            joinColumns = { @JoinColumn(name = "book_id") },
+            inverseJoinColumns = { @JoinColumn(name = "genre_id") }
+    )
     private Set<Genre> genres;
-
+    @OneToMany(mappedBy = "book")
+    private Set<Subscription> subscriptions = new HashSet<>();
     @Lob
     private Blob content;
 
-    public Book(String title, LocalDate publicationDate, String synopsis, int pageCount, float pricePerDay, String isbn, float rating, BlobFile cover, Author author, Set<Genre> genres, Blob content) {
+    public Book(String title, LocalDate publicationDate, String synopsis, int pageCount, float pricePerDay, String isbn, float rating, BlobFile cover, Author author, Set<Genre> genres, Set<Subscription> subscriptions, Blob content) {
         this.title = title;
         this.publicationDate = publicationDate;
         this.synopsis = synopsis;
@@ -60,11 +60,25 @@ public class Book implements DBEntity{
         this.cover = cover;
         this.author = author;
         this.genres = genres;
+        this.subscriptions = subscriptions;
         this.content = content;
     }
 
     @Override
     public String toString() {
-        return title;
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", publicationDate=" + publicationDate +
+                ", synopsis='" + synopsis + '\'' +
+                ", pageCount=" + pageCount +
+                ", pricePerDay=" + pricePerDay +
+                ", isbn='" + isbn + '\'' +
+                ", rating=" + rating +
+                ", cover=" + cover +
+                ", author=" + author +
+                ", genres=" + genres +
+                ", content=" + content +
+                '}';
     }
 }

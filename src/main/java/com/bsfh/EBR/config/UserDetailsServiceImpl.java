@@ -30,7 +30,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             auths.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
-        System.out.println("loading user = " + customer);
         return new User(customer.getUsername(), customer.getPassword(), auths);
     }
 }

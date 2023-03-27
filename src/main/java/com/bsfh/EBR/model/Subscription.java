@@ -2,11 +2,13 @@ package com.bsfh.EBR.model;
 
 
 import com.bsfh.EBR.helper.Template;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.UuidGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -25,10 +27,8 @@ public class Subscription implements DBEntity {
     private LocalDate dateOpened;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateClosed;
-
     @ManyToOne
     private Customer customer;
-
     @ManyToOne
     private Book book;
 
@@ -41,6 +41,12 @@ public class Subscription implements DBEntity {
 
     @Override
     public String toString() {
-        return getId() + ". " + dateOpened + ": " + customer + ", " + book;
+        return "Subscription{" +
+                "id=" + id +
+                ", dateOpened=" + dateOpened +
+                ", dateClosed=" + dateClosed +
+                ", customer=" + customer +
+                ", book=" + book +
+                '}';
     }
 }

@@ -7,13 +7,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
 import java.io.IOException;
 import java.sql.SQLException;
 
 @Component
 public class BlobConverter implements Converter<MultipartFile, BlobFile> {
-    private DBService<BlobFile> service;
+    private final DBService<BlobFile> service;
 
     public BlobConverter(DBService<BlobFile> service) {
         this.service = service;
@@ -23,7 +22,7 @@ public class BlobConverter implements Converter<MultipartFile, BlobFile> {
     public BlobFile convert(MultipartFile file) {
         if(!file.isEmpty()) {
             try {
-                BlobFile bf = new BlobFile(file.getName(), file.getContentType(), new SerialBlob(file.getBytes()));
+                BlobFile bf = new BlobFile(file.getOriginalFilename(), file.getContentType(), new SerialBlob(file.getBytes()), null);
                 service.create(bf);
                 return bf;
 

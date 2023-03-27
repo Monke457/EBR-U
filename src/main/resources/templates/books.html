@@ -73,7 +73,7 @@
                 <div th:if="${booksByGenre.size} > 0">
                     <a class="sub-header" th:href="@{/books/{id}/similar(id=${result.id})}">Readers also like...</a>
                     <div class="grid-main-small">
-                        <div class="grid-card small-card" th:each="book : ${booksByGenre}">
+                        <div class="grid-card" th:each="book : ${booksByGenre}">
                             <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
                                 <div class="book-cover-wrapper">
                                     <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
@@ -87,7 +87,7 @@
                 <div th:if="${booksByAuthor.size} > 0">
                     <a class="sub-header" th:href="@{/authors/{id}(id=${result.author.id})}" th:text="'More books by ' + ${result.author.firstName} + ' ' + ${result.author.lastName}"></a>
                     <div class="grid-main-small">
-                        <div class="grid-card small-card" th:each="book : ${booksByAuthor}">
+                        <div class="grid-card" th:each="book : ${booksByAuthor}">
                             <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
                                 <div class="book-cover-wrapper">
                                     <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">

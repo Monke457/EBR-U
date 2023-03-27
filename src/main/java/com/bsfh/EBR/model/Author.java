@@ -1,12 +1,13 @@
 package com.bsfh.EBR.model;
 
 import com.bsfh.EBR.helper.Template;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Set;
 import java.util.UUID;
@@ -22,7 +23,6 @@ public class Author implements DBEntity {
     private UUID id;
     private String firstName;
     private String lastName;
-
     @OneToMany(mappedBy = "author")
     private Set<Book> books;
 

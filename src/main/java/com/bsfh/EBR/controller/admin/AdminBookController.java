@@ -7,6 +7,8 @@ import com.bsfh.EBR.model.Genre;
 import com.bsfh.EBR.service.DBService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,8 +21,8 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/admin/books")
 public class AdminBookController extends AdminController<Book> {
 
-    private DBService<Author> authorService;
-    private DBService<Genre> genreService;
+    private final DBService<Author> authorService;
+    private final DBService<Genre> genreService;
 
     public AdminBookController(AuthUser user, DBService<Book> service, DBService<Author> authorService, DBService<Genre> genreService) {
         super(user, service, Book.class);
@@ -41,6 +43,17 @@ public class AdminBookController extends AdminController<Book> {
     public String edit(Model model, @PathVariable UUID id) {
         addModelAttributes(model);
         return super.edit(model, id);
+    }
+
+    //Hack to get around the current image being deleted when nothing is uploaded in the edit
+    @Override
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
+    protected String edit(@ModelAttribute Book item, BindingResult bindingResult) {
+        if (item.getCover() == null) {
+            Book bookFromBackend = service.find(Book.class, item.getId());
+            item.setCover(bookFromBackend.getCover());
+        }
+        return super.edit(item, bindingResult);
     }
 
     private void addModelAttributes(Model model) {
