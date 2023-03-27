@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.HashSet;
 import java.util.Objects;
 
 @Controller
@@ -50,7 +51,7 @@ public class LoginController {
             return "register";
         }
 
-        customerService.create(new Customer(formData.getUsername(), encoder.encode(formData.getPassword()), formData.getEmail(), false));
+        customerService.create(new Customer(formData.getUsername(), encoder.encode(formData.getPassword()), formData.getEmail(), false, new HashSet<>()));
         model.addAttribute("formData", new Customer());
         return "login";
     }

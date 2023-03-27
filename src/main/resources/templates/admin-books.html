@@ -8,43 +8,41 @@
 
 <!-- content -->
 <div class="content" th:switch="${formData}">
-
     <!-- table -->
     <div class="table-wrapper" th:case="null">
         <h4 class="sub-header">Book Management</h4>
         <a class="submit-button" th:href="@{/admin/books/add}">New Book</a>
         <table class="admin-table">
             <tr>
-                <th>ID</th>
+                <th>Cover</th>
                 <th>Title</th>
                 <th>Author</th>
-                <th>Publication Date</th>
-                <th>Synopsis</th>
-                <th>Price</th>
-                <th>Page Count</th>
-                <th>ISBN</th>
-                <th>Rating</th>
-                <th>Cover</th>
-                <th>Genres</th>
+                <th class="desktop-table">Publication Date</th>
+                <th class="desktop-table">Synopsis</th>
+                <th class="desktop-table">Price</th>
+                <th class="desktop-table">Page Count</th>
+                <th class="desktop-table">ISBN</th>
+                <th class="desktop-table">Rating</th>
+                <th class="desktop-table">Genres</th>
                 <th>Edit</th>
-                <th>Delete</th>
+                <th></th>
             </tr>
             <tr th:each="item : ${results}">
-                <td th:text="${item.id}"></td>
+                <td><div class="img-wrapper"><img class="table-image" th:src="@{/books/{id}/cover(id=${item.id})}" th:alt="${item.title}"></div></td>
                 <td th:text="${item.title}"></td>
-                <td th:text="${item.author.firstName} + ' ' + ${item.author.lastName}"></td>
-                <td th:text="${item.publicationDate}"></td>
-                <td th:text="${item.synopsis}"></td>
-                <td th:text="${item.pricePerDay}"></td>
-                <td th:text="${item.pageCount}"></td>
-                <td th:text="${item.isbn}"></td>
-                <td th:text="${item.rating}"></td>
-                <td><img class="table-image" th:src="@{/books/{id}/cover(id=${item.id})}" th:alt="${item.title}"></td>
-                <td th:text="${item.genres}"></td>
-                <td><a class="edit-button" th:href="@{/admin/books/{id}/edit(id=${item.id})}">Edit</a></td>
+                <td th:if="${item.author} == null">Null</td>
+                <td th:unless="${item.author} == null" th:text="${item.author.firstName} + ' ' + ${item.author.lastName}"></td>
+                <td class="desktop-table" th:text="${item.publicationDate}"></td>
+                <td class="desktop-table" th:text="${item.synopsis}"></td>
+                <td class="desktop-table" th:text="${item.pricePerDay}"></td>
+                <td class="desktop-table" th:text="${item.pageCount}"></td>
+                <td class="desktop-table" th:text="${item.isbn}"></td>
+                <td class="desktop-table" th:text="${item.rating}"></td>
+                <td class="desktop-table" th:text="${item.genres}"></td>
+                <td><a class="edit-button" th:href="@{/admin/books/{id}/edit(id=${item.id})}">></a></td>
                 <td>
                     <form th:action="@{/admin/books/{id}/delete(id=${item.id})}" method="post">
-                        <input class="delete-button" type="submit" value="Delete">
+                        <input class="delete-button" type="submit" value="X">
                     </form>
                 </td>
             </tr>
@@ -55,30 +53,38 @@
 
     <!-- form -->
     <div class="section-wrapper" th:case="*">
-        <h4 class="section-head" th:text="${formData.id} == 0 ? 'New Book' : 'Edit Book'"></h4>
-        <form class="entity-form" th:action="${formData.id} == 0 ? @{add} : @{edit}" th:object="${formData}" enctype="multipart/form-data" method="post">
-            <label>Title</label><br>
-            <input type="text" th:field="*{title}"><br><br>
-            <label>Publication Date</label><br>
-            <input type="date" th:field="*{publicationDate}"><br><br>
-            <label>Page Count</label><br>
-            <input type="number" th:field="*{pageCount}"><br><br>
-            <label>Synopsis</label><br>
-            <textarea rows="10" cols="50" th:field="*{synopsis}"></textarea><br><br>
-            <label>ISBN</label><br>
-            <input type="text" th:field="*{isbn}"><br><br>
-            <label>Price per day (CHF)</label><br>
-            <input type="number" step="0.01" min="0" th:field="*{pricePerDay}"><br><br>
-            <label>Rating</label><br>
-            <input type="number" step="0.1" min="0" max="5" th:field="*{rating}"><br><br>
-            <label>Author</label><br>
-            <select name="author">
-                <option th:each="author : ${authors}" th:text="${author.firstName} + ' ' + ${author.lastName}" th:value="${author.id}" th:selected="${formData.author} != null and ${author.id} == ${formData.author.id}"></option>
-            </select><br><br>
-            <label>Genres</label><br>
-            <input class="checkbox-g" type="checkbox" name="genres" th:each="genre : ${genres}" th:text="${genre.name}" th:value="${genre.id}" th:checked="${formData.genres} != null and ${#lists.contains(formData.genres, genre)}"><br><br>
-            <label>Cover</label><br>
-            <input type="file" th:field="*{cover}"><br><br>
+        <h4 class="section-head" th:text="${formData.id} == null ? 'New Book' : 'Edit Book'"></h4>
+        <form class="entity-form" th:action="${formData.id} == null ? @{add} : @{edit}" th:object="${formData}" enctype="multipart/form-data" method="post">
+            <label>Title</label>
+            <input type="text" th:field="*{title}"><br>
+            <label>Publication Date</label>
+            <input type="date" th:field="*{publicationDate}"><br>
+            <label>Page Count</label>
+            <input type="number" th:field="*{pageCount}"><br>
+            <label>Synopsis</label>
+            <textarea rows="10" cols="50" th:field="*{synopsis}"></textarea><br>
+            <label>ISBN</label>
+            <input type="text" th:field="*{isbn}"><br>
+            <label>Price per day (CHF)</label>
+            <input type="number" step="0.01" min="0" th:field="*{pricePerDay}"><br>
+            <label>Rating</label>
+            <input type="number" step="0.1" min="0" max="5" th:field="*{rating}"><br>
+            <label>Author</label>
+            <select th:field="*{author.id}">
+                <option th:each="author : ${authors}" th:text="${author.firstName} + ' ' + ${author.lastName}" th:value="${author.id}"></option>
+            </select><br>
+            <label>Genres</label>
+            <div class="genre-box">
+                <span class="checkbox-g" th:each="genre : ${genres}">
+                     <input type="checkbox" th:field="*{genres}" th:text="${genre.name}" th:value="${genre.id}">
+                </span>
+            </div>
+            <br>
+            <label>Cover</label>
+            <div class="form-img-wrapper">
+                <img id="frame" th:src="@{/books/{id}/cover(id=${formData.id})}" th:alt="${formData.title}">
+            </div>
+            <input type="file" th:field="*{cover}" accept="image/*" onchange="preview()"><br>
             <div class="button-wrapper">
                 <input class="submit-button" type="submit" name="submit" value="Submit">
                 <a class="submit-button" href="/admin/books">Back</a>
@@ -90,4 +96,10 @@
 <!-- footer -->
 <div th:replace="~{fragments/footer.html :: footer}"></div>
 </body>
+<script>
+    function preview() {
+        frame.src=URL.createObjectURL(event.target.files[0]);
+        $('img.frame').load(frame.src);
+    }
+</script>
 </html>

@@ -14,24 +14,24 @@
         <h4 class="sub-header">Subscription Management</h4>
         <table class="admin-table">
             <tr>
-                <th>ID</th>
                 <th>Customer</th>
                 <th>Book</th>
-                <th>Date Opened</th>
-                <th>Date Closed</th>
+                <th class="desktop-table">Date Opened</th>
+                <th class="desktop-table">Date Closed</th>
                 <th>Edit</th>
-                <th>Delete</th>
+                <th></th>
             </tr>
             <tr th:each="item : ${results}">
-                <td th:text="${item.id}"></td>
-                <td th:text="${item.customer.id}"></td>
-                <td th:text="${item.book.id}"></td>
-                <td th:text="${item.dateOpened}"></td>
-                <td th:text="${item.dateClosed}"></td>
-                <td><a class="edit-button" th:href="@{/admin/subscriptions/{id}/edit(id=${item.id})}">Edit</a></td>
+                <td th:unless="${item.customer} == null" th:text="${item.customer.username}"></td>
+                <td th:if="${item.customer} == null">Null</td>
+                <td th:unless="${item.book} == null" th:text="${item.book.title}"></td>
+                <td th:if="${item.book} == null">Null</td>
+                <td class="desktop-table" th:text="${item.dateOpened}"></td>
+                <td class="desktop-table" th:text="${item.dateClosed}"></td>
+                <td><a class="edit-button" th:href="@{/admin/subscriptions/{id}/edit(id=${item.id})}">></a></td>
                 <td>
                     <form th:action="@{/admin/subscriptions/{id}/delete(id=${item.id})}" method="post">
-                        <input class="delete-button" type="submit" value="Delete">
+                        <input class="delete-button" type="submit" value="X">
                     </form>
                 </td>
             </tr>
@@ -44,18 +44,18 @@
     <div class="section-wrapper" th:case="*">
         <h4 class="section-head">Edit Subscription</h4>
         <form class="entity-form" th:action="@{edit}" th:object="${formData}" method="post">
-            <label>Customer</label><br>
-            <select name="customer">
-                <option th:each="customer : ${customers}" th:text="${customer.username}" th:value="${customer.id}" th:selected="${customer.id} == ${formData.customer.id}"></option>
-            </select><br><br>
-            <label>Book</label><br>
-            <select name="book">
-                <option th:each="book : ${books}" th:selected="${formData.book} != null and ${book.id} == ${formData.book.id}" th:text="${book.title}" th:value="${book.id}"></option>
-            </select><br><br>
-            <label>Date Opened</label><br>
-            <input type="date" th:field="*{dateOpened}"><br><br>
-            <label>Date Closed</label><br>
-            <input type="date" th:field="*{dateClosed}"><br><br>
+            <label>Customer</label>
+            <select th:field="*{customer.id}">
+                <option th:each="customer : ${customers}" th:text="${customer.username}" th:value="${customer.id}"></option>
+            </select><br>
+            <label>Book</label>
+            <select th:field="*{book.id}">
+                <option th:each="book : ${books}" th:text="${book.title}" th:value="${book.id}"></option>
+            </select><br>
+            <label>Date Opened</label>
+            <input type="date" th:field="*{dateOpened}"><br>
+            <label>Date Closed</label>
+            <input type="date" th:field="*{dateClosed}"><br>
             <div class="button-wrapper">
                 <input class="submit-button" type="submit" name="submit" value="Submit">
                 <a class="submit-button" href="/admin/subscriptions">Back</a>

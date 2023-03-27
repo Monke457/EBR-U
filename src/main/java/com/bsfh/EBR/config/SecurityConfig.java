@@ -29,6 +29,8 @@ public class SecurityConfig implements WebMvcConfigurer {
                         .requestMatchers("/**").permitAll())
                 .csrf().disable().cors()
                 .and()
+                .exceptionHandling().accessDeniedPage("/")
+                .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout(logout -> logout.logoutSuccessUrl("/").permitAll())

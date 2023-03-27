@@ -49,7 +49,6 @@ public class DBService<T extends DBEntity> {
         return em.createQuery(cq).getResultStream();
     }
 
-    @Transactional
     public Stream<T> findAll(Class<T> type)  {
         return findAll(type, null);
     }
@@ -119,8 +118,13 @@ public class DBService<T extends DBEntity> {
         return predicates.toArray(new Predicate[]{});
     }
 
-    public boolean exists(Class<T> type, UUID id) {
-        return find(type, id) != null;
+    @Transactional
+    public boolean exists(Class<T> type) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(type);
+        cq.from(type);
+
+        return em.createQuery(cq).setMaxResults(1).getResultStream().findAny().isPresent();
     }
 
     @Transactional

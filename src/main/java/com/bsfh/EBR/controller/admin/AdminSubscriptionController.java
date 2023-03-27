@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/admin/subscriptions")
 public class AdminSubscriptionController extends AdminController<Subscription> {
 
-    private DBService<Customer> customerService;
-    private DBService<Book> bookService;
+    private final DBService<Customer> customerService;
+    private final DBService<Book> bookService;
 
     public AdminSubscriptionController(AuthUser user, DBService<Subscription> service, DBService<Customer> customerService, DBService<Book> bookService) {
         super(user, service, Subscription.class);

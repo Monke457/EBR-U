@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.sql.Blob;
 import java.util.UUID;
@@ -20,14 +18,16 @@ public class BlobFile implements DBEntity {
     private UUID id;
     private String fileName;
     private String mime;
-
     @Lob
     private Blob fileData;
+    @OneToOne
+    private Book book;
 
-    public BlobFile(String fileName, String mime, Blob fileData) {
+    public BlobFile(String fileName, String mime, Blob fileData, Book book) {
         this.fileName = fileName;
         this.mime = mime;
         this.fileData = fileData;
+        this.book = book;
     }
 
     @Override

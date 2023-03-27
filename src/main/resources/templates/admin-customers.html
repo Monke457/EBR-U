@@ -15,20 +15,18 @@
         <a class="submit-button"  th:href="@{/admin/customers/add}">New Customer</a>
         <table class="admin-table">
             <tr>
-                <th>ID</th>
                 <th>Username</th>
                 <th>Email</th>
                 <th>Edit</th>
-                <th>Delete</th>
+                <th></th>
             </tr>
             <tr th:each="item : ${results}">
-                <td th:text="${item.id}"></td>
                 <td th:text="${item.username}"></td>
                 <td th:text="${item.email}"></td>
-                <td><a class="edit-button" th:href="@{/admin/customers/{id}/edit(id=${item.id})}">Edit</a></td>
+                <td><a class="edit-button" th:href="@{/admin/customers/{id}/edit(id=${item.id})}">></a></td>
                 <td>
                     <form th:action="@{/admin/customers/{id}/delete(id=${item.id})}" method="post">
-                        <input class="delete-button" type="submit" value="Delete">
+                        <input class="delete-button" type="submit" value="X">
                     </form>
                 </td>
             </tr>
@@ -39,14 +37,15 @@
 
     <!-- form -->
     <div class="section-wrapper" th:case="*">
-        <h4 class="section-head" th:text="${formData.id} == 0 ? 'New Author' : 'Edit Author'"></h4>
-        <form class="entity-form" th:action="${formData.id} == 0 ? @{add} : @{edit}" th:object="${formData}" method="post">
-            <label>Username</label><br>
-            <input type="text" th:field="*{username}"><br><br>
-            <label>email</label><br>
-            <input type="text" th:field="*{email}"><br><br>
-            <label>Admin</label><br>
-            <input type="checkbox" th:field="*{admin}"><br><br>
+        <h4 class="section-head" th:text="${formData.id} == null ? 'New Author' : 'Edit Author'"></h4>
+        <form class="entity-form" th:action="${formData.id} == null ? @{add} : @{edit}" th:object="${formData}" method="post">
+            <label>Username</label>
+            <input type="text" th:field="*{username}"><br>
+            <label>email</label>
+            <input type="text" th:field="*{email}"><br>
+            <span class="checkbox-g">
+                <input type="checkbox" th:field="*{admin}">Admin
+            </span>
             <div class="button-wrapper">
                 <input class="submit-button" type="submit" name="submit" value="Submit">
                 <a class="submit-button" href="/admin/customers">Back</a>

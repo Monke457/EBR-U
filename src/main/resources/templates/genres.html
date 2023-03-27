@@ -10,27 +10,33 @@
 <div class="content">
 
   <!-- genres -->
-  <div class="section-wrapper" th:if="${results} != null">
-    <h4 class="section-head">Genres</h4>
-    <form th:action="@{/genres}" th:object="${filterData}" method="post">
-      <input class="checkbox-g" type="checkbox" name="genres" th:each="genre : ${results}" th:text="${genre.name}" th:value="${genre.id}" th:field="*{genreIds}">
-      <br>
-      <input class="submit-button" name="submit" type="submit" value="Filter">
-    </form>
-  </div>
+    <div class="section-wrapper" th:if="${results} != null">
+        <h4 class="section-head">Genres</h4>
+        <label class="toggle-label" for="toggle">Filters <i class="material-icons">expand_more</i></label>
+        <input class="fold-out-box" id="toggle" type="checkbox">
+        <div class="fold-out-content">
+            <form class="genre-filter" id="genre-form" th:action="@{/genres}" th:object="${filterData}" method="post">
+            <span class="checkbox-g" th:each="genre : ${results}">
+                <input type="checkbox" name="genres"  th:text="${genre.name}" th:value="${genre.id}" th:field="*{genreIds}">
+            </span>
+            <br>
+            </form>
+            <input form="genre-form" class="submit-button" name="submit" type="submit" value="Apply filters">
+        </div>
+    </div>
 
-  <!-- books -->
-  <div class="section-wrapper" th:if="${books} != null">
-    <div class="grid-main">
-      <div class="grid-card medium-card" th:each="book : ${books}">
-        <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
-          <div class="book-cover-wrapper">
-            <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
-          </div>
-        </a>
+    <!-- books -->
+    <div class="section-wrapper" th:if="${books} != null">
+        <div class="grid-main">
+        <div class="grid-card medium-card" th:each="book : ${books}">
+            <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${book.id})}">
+            <div class="book-cover-wrapper">
+              <img class="book-cover" th:src="@{/books/{id}/cover(id=${book.id})}" th:alt="${book.title}">
+            </div>
+            </a>
+        </div>
       </div>
     </div>
-  </div>
 </div>
 
 <!-- footer -->

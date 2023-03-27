@@ -15,18 +15,18 @@
         <a class="submit-button"  href="/admin/genres/add">New Genre</a>
         <table class="admin-table">
             <tr>
-                <th>ID</th>
                 <th>Title</th>
+                <th>Books</th>
                 <th>Edit</th>
-                <th>Delete</th>
+                <th></th>
             </tr>
             <tr th:each="item : ${results}">
-                <td th:text="${item.id}"></td>
                 <td th:text="${item.name}"></td>
-                <td><a class="edit-button" th:href="@{/admin/genres/{id}/edit(id=${item.id})}">Edit</a></td>
+                <td th:text="${item.books.size}"></td>
+                <td><a class="edit-button" th:href="@{/admin/genres/{id}/edit(id=${item.id})}">></a></td>
                 <td>
                     <form th:action="@{/admin/genres/{id}/delete(id=${item.id})}" method="post">
-                        <input class="delete-button" type="submit" value="Delete">
+                        <input class="delete-button" type="submit" value="X">
                     </form>
                 </td>
             </tr>
@@ -37,10 +37,10 @@
 
     <!-- form -->
     <div class="section-wrapper" th:case="*">
-        <h4 class="section-head" th:text="${formData.id} == 0 ? 'New Genre' : 'Edit Genre'"></h4>
-        <form class="entity-form" th:action="${formData.id} == 0 ? @{add} : @{edit}" th:object="${formData}" method="post">
-            <label>Name</label><br>
-            <input type="text" th:field="*{name}"><br><br>
+        <h4 class="section-head" th:text="${formData.id} == null ? 'New Genre' : 'Edit Genre'"></h4>
+        <form class="entity-form" th:action="${formData.id} == null ? @{add} : @{edit}" th:object="${formData}" method="post">
+            <label>Name</label>
+            <input type="text" th:field="*{name}"><br>
             <div class="button-wrapper">
                 <input class="submit-button" type="submit" name="submit" value="Submit">
                 <a class="submit-button" href="/admin/genres">Back</a>
