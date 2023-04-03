@@ -49,9 +49,12 @@ public class AdminBookController extends AdminController<Book> {
     @Override
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
     protected String edit(@ModelAttribute Book item, BindingResult bindingResult) {
+        Book bookFromBackend = service.find(Book.class, item.getId());
         if (item.getCover() == null) {
-            Book bookFromBackend = service.find(Book.class, item.getId());
             item.setCover(bookFromBackend.getCover());
+        }
+        if (item.getContent() == null) {
+            item.setContent(bookFromBackend.getContent());
         }
         return super.edit(item, bindingResult);
     }

@@ -66,7 +66,6 @@ public abstract class AdminController<T extends DBEntity> {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(@ModelAttribute T item, BindingResult bindingResult) {
         if(!bindingResult.hasErrors()) {
-            System.out.println("creating item = " + item);
             service.create(item);
         }
         return redirect;

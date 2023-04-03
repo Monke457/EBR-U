@@ -8,10 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Repository
@@ -37,20 +34,16 @@ public class DBService<T extends DBEntity> {
     }
 
     @Transactional
-    public Stream<T> findAll(Class<T> type, String sortField)  {
+    public Stream<T> findAll(Class<T> type, String... sortFields)  {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(type);
         Root<T> root = cq.from(type);
 
-        if(sortField != null) {
-            cq.orderBy(cb.asc(root.get(sortField)));
+        if (sortFields != null) {
+            addSortOrder(root, cq, cb, sortFields);
         }
 
         return em.createQuery(cq).getResultStream();
-    }
-
-    public Stream<T> findAll(Class<T> type)  {
-        return findAll(type, null);
     }
 
     @Transactional
@@ -81,12 +74,12 @@ public class DBService<T extends DBEntity> {
         return null;
     }
 
-    public Stream<T> findByRelation(Class<T> type, String field, UUID relationId, int limit, String sortField) {
-        return findByRelation(type, field, Set.of(relationId), limit, sortField);
+    public Stream<T> findByRelation(Class<T> type, String field, UUID relationId, int limit, String... sortFields) {
+        return findByRelation(type, field, Set.of(relationId), limit, sortFields);
     }
 
     @Transactional
-    public Stream<T> findByRelation(Class<T> type, String field, Set<UUID> relationIds, int limit, String sortField) {
+    public Stream<T> findByRelation(Class<T> type, String field, Set<UUID> relationIds, int limit, String... sortFields) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(type);
         Root<T> root = cq.from(type);
@@ -94,8 +87,8 @@ public class DBService<T extends DBEntity> {
 
         cq.where(join.get("id").in(relationIds)).distinct(true);
 
-        if(sortField != null) {
-            cq.orderBy(cb.asc(root.get(sortField)));
+        if (sortFields != null) {
+            addSortOrder(root, cq, cb, sortFields);
         }
 
         if(limit != 0) {
@@ -116,6 +109,14 @@ public class DBService<T extends DBEntity> {
         }
 
         return predicates.toArray(new Predicate[]{});
+    }
+
+    private void addSortOrder(Root<T> root, CriteriaQuery<T> cq, CriteriaBuilder cb, String... sortFields) {
+        List<Order> orderList = new ArrayList<>();
+        for (String sortField : sortFields) {
+            orderList.add(cb.asc(root.get(sortField)));
+        }
+        cq.orderBy(orderList);
     }
 
     @Transactional

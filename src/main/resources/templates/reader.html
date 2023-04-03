@@ -8,11 +8,19 @@
 <!-- content -->
 <div class="content">
     <div class="section-wrapper">
-        <h1>Reader would go here...</h1>
+        <div class="epub" th:if="${resources} != null" th:each="resource : ${resources}">
+            [(${resource})]
+        </div>
     </div>
+</div>
+
+<!-- HACK: extra closing divs to fix a wierd layout bug with one of the epub files
+      which embedded the footer div in the content div (incorrect tags in the xml ??) -->
+</div>
 </div>
 
 <!-- footer -->
 <div th:replace="~{fragments/footer.html :: footer}"></div>
 </body>
+
 </html>

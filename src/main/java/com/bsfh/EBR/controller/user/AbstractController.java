@@ -17,20 +17,16 @@ import java.util.stream.Collectors;
 public abstract class AbstractController<T extends DBEntity> {
 
     protected AuthUser user;
-    private DBService<T> service;
-    private Class<T> type;
-    private String sortField;
+    private final DBService<T> service;
+    private final Class<T> type;
+    private final String[] sortFields;
     private String template = "";
 
-    public AbstractController(AuthUser user, DBService<T> service, Class<T> type) {
-        this(user, service, type, null);
-    }
-
-    public AbstractController(AuthUser user, DBService<T> service, Class<T> type, String sortField) {
+    public AbstractController(AuthUser user, DBService<T> service, Class<T> type, String... sortFields) {
         this.user = user;
         this.service = service;
         this.type = type;
-        this.sortField = sortField;
+        this.sortFields = sortFields;
 
         if(type.isAnnotationPresent(Template.class)) {
             template = type.getAnnotation(Template.class).user();
@@ -41,7 +37,7 @@ public abstract class AbstractController<T extends DBEntity> {
     public String findAll(Model model) {
         addGlobalAttributes(model);
 
-        List<T> results = service.findAll(type, sortField).collect(Collectors.toList());
+        List<T> results = service.findAll(type, sortFields).collect(Collectors.toList());
         model.addAttribute("results", results);
 
         return template;
