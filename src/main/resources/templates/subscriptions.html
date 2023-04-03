@@ -16,19 +16,17 @@
             <span th:case="null">No results found</span>
 
             <div th:case="*">
-                <div class="grid-main g-large">
+                <div class="grid-main">
                     <div class="grid-card c-large" th:each="sub : ${results}">
                         <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${sub.book.id})}">
                             <div class="book-cover-wrapper">
                                 <img class="book-cover" th:src="@{/books/{id}/cover(id=${sub.book.id})}" th:alt="${sub.book.title}">
                             </div>
                         </a>
-                        <div class="buttons">
-                            <form th:action="@{/subscriptions/{id}(id=${sub.id})}" method="post">
-                                <input type="submit" name="submit" class="book-button unsub b-small" th:value="Unsub">
-                            </form>
-                            <a class="book-button sub b-small" th:href="@{/subscriptions/{id}/read(id=${sub.id})}">Read</a>
-                        </div>
+                        <form th:action="@{/subscriptions/{id}(id=${sub.id})}" method="post">
+                            <input type="submit" name="submit" class="book-button unsub b-small" th:value="Unsub">
+                        </form>
+                        <a class="book-button sub b-small" th:href="@{/subscriptions/{id}/read(id=${sub.id})}">Read</a>
                     </div>
                 </div>
             </div>

@@ -12,7 +12,8 @@
     <!-- table -->
     <div class="table-wrapper" th:case="null">
         <h4 class="sub-header">Customer Management</h4>
-        <a class="submit-button"  th:href="@{/admin/customers/add}">New Customer</a>
+        <a class="submit-button secondary"  th:href="@{/admin/customers/add}">New Customer</a>
+        <a class="submit-button" href="/admin">Back</a>
         <table class="admin-table">
             <tr>
                 <th>Username</th>
@@ -23,7 +24,7 @@
             <tr th:each="item : ${results}">
                 <td th:text="${item.username}"></td>
                 <td th:text="${item.email}"></td>
-                <td><a class="edit-button" th:href="@{/admin/customers/{id}/edit(id=${item.id})}">></a></td>
+                <td><a class="edit-button" th:href="@{/admin/customers/{id}/edit(id=${item.id})}">Edit</a></td>
                 <td>
                     <form th:action="@{/admin/customers/{id}/delete(id=${item.id})}" method="post">
                         <input class="delete-button" type="submit" value="X">
@@ -31,12 +32,10 @@
                 </td>
             </tr>
         </table>
-
-        <a class="submit-button" href="/admin">Back</a>
     </div>
 
     <!-- form -->
-    <div class="section-wrapper" th:case="*">
+    <div class="section-wrapper form" th:case="*">
         <h4 class="section-head" th:text="${formData.id} == null ? 'New Author' : 'Edit Author'"></h4>
         <form class="entity-form" th:action="${formData.id} == null ? @{add} : @{edit}" th:object="${formData}" method="post">
             <label>Username</label>

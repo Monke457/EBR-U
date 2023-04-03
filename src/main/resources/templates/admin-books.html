@@ -11,21 +11,20 @@
     <!-- table -->
     <div class="table-wrapper" th:case="null">
         <h4 class="sub-header">Book Management</h4>
-        <a class="submit-button" th:href="@{/admin/books/add}">New Book</a>
+        <a class="submit-button secondary" th:href="@{/admin/books/add}">New Book</a>
+        <a class="submit-button" href="/admin">Back</a>
         <table class="admin-table">
             <tr>
                 <th>Cover</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th class="desktop-table">Publication Date</th>
-                <th class="desktop-table">Synopsis</th>
+                <th class="desktop-table mobile-table">Synopsis</th>
                 <th class="desktop-table">Price</th>
                 <th class="desktop-table">Page Count</th>
-                <th class="desktop-table">ISBN</th>
+                <th class="desktop-table mobile-table">ISBN</th>
                 <th class="desktop-table">Rating</th>
-                <th class="desktop-table">Genres</th>
-                <th>Edit</th>
-                <th></th>
+                <th class="desktop-table mobile-table">Genres</th>
             </tr>
             <tr th:each="item : ${results}">
                 <td><div class="img-wrapper"><img class="table-image" th:src="@{/books/{id}/cover(id=${item.id})}" th:alt="${item.title}"></div></td>
@@ -33,13 +32,13 @@
                 <td th:if="${item.author} == null">Null</td>
                 <td th:unless="${item.author} == null" th:text="${item.author.firstName} + ' ' + ${item.author.lastName}"></td>
                 <td class="desktop-table" th:text="${item.publicationDate}"></td>
-                <td class="desktop-table" th:text="${item.synopsis}"></td>
+                <td class="desktop-table mobile-table" th:text="${item.synopsis}"></td>
                 <td class="desktop-table" th:text="${item.pricePerDay}"></td>
                 <td class="desktop-table" th:text="${item.pageCount}"></td>
-                <td class="desktop-table" th:text="${item.isbn}"></td>
+                <td class="desktop-table mobile-table" th:text="${item.isbn}"></td>
                 <td class="desktop-table" th:text="${item.rating}"></td>
-                <td class="desktop-table" th:text="${item.genres}"></td>
-                <td><a class="edit-button" th:href="@{/admin/books/{id}/edit(id=${item.id})}">></a></td>
+                <td class="desktop-table mobile-table" th:text="${item.genres}"></td>
+                <td><a class="edit-button" th:href="@{/admin/books/{id}/edit(id=${item.id})}">Edit</a></td>
                 <td>
                     <form th:action="@{/admin/books/{id}/delete(id=${item.id})}" method="post">
                         <input class="delete-button" type="submit" value="X">
@@ -47,12 +46,10 @@
                 </td>
             </tr>
         </table>
-
-        <a class="submit-button" href="/admin">Back</a>
     </div>
 
     <!-- form -->
-    <div class="section-wrapper" th:case="*">
+    <div class="section-wrapper form" th:case="*">
         <h4 class="section-head" th:text="${formData.id} == null ? 'New Book' : 'Edit Book'"></h4>
         <form class="entity-form" th:action="${formData.id} == null ? @{add} : @{edit}" th:object="${formData}" enctype="multipart/form-data" method="post">
             <label>Title</label>
@@ -82,7 +79,7 @@
             <br>
             <label>Cover</label>
             <div class="form-img-wrapper">
-                <img id="frame" th:src="@{/books/{id}/cover(id=${formData.id})}" th:alt="${formData.title}">
+                <img th:if="${formData.cover} != null"  id="frame" th:src="@{/books/{id}/cover(id=${formData.id})}" th:alt="${formData.title}">
             </div>
             <input type="file" th:field="*{cover}" accept="image/*" onchange="preview()"><br>
             <div class="button-wrapper">

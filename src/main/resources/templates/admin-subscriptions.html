@@ -12,6 +12,7 @@
     <!-- table -->
     <div class="table-wrapper" th:case="null">
         <h4 class="sub-header">Subscription Management</h4>
+        <a class="submit-button" href="/admin">Back</a>
         <table class="admin-table">
             <tr>
                 <th>Customer</th>
@@ -28,7 +29,7 @@
                 <td th:if="${item.book} == null">Null</td>
                 <td class="desktop-table" th:text="${item.dateOpened}"></td>
                 <td class="desktop-table" th:text="${item.dateClosed}"></td>
-                <td><a class="edit-button" th:href="@{/admin/subscriptions/{id}/edit(id=${item.id})}">></a></td>
+                <td><a class="edit-button" th:href="@{/admin/subscriptions/{id}/edit(id=${item.id})}">Edit</a></td>
                 <td>
                     <form th:action="@{/admin/subscriptions/{id}/delete(id=${item.id})}" method="post">
                         <input class="delete-button" type="submit" value="X">
@@ -36,12 +37,10 @@
                 </td>
             </tr>
         </table>
-
-        <a class="submit-button" href="/admin">Back</a>
     </div>
 
     <!-- form -->
-    <div class="section-wrapper" th:case="*">
+    <div class="section-wrapper form" th:case="*">
         <h4 class="section-head">Edit Subscription</h4>
         <form class="entity-form" th:action="@{edit}" th:object="${formData}" method="post">
             <label>Customer</label>
