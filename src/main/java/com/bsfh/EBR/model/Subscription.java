@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @Entity
@@ -37,6 +38,16 @@ public class Subscription implements DBEntity {
         this.dateClosed = dateClosed;
         this.customer = customer;
         this.book = book;
+    }
+
+    public double getFee() {
+        LocalDate end = dateClosed != null ? dateClosed : LocalDate.now();
+        int days = (int) ChronoUnit.DAYS.between(dateOpened, end);
+        return days * book.getPricePerDay();
+    }
+
+    public boolean isClosed() {
+        return dateClosed != null && !dateClosed.isAfter(LocalDate.now());
     }
 
     @Override

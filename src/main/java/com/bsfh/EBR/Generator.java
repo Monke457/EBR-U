@@ -105,7 +105,7 @@ public class Generator {
                     king,
                     Set.of(horror, thriller),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/it.epub")).readAllBytes()));
 
             Book harryPotter1 = new Book("Harry Potter and the Philosopher's Stone",
                     LocalDate.of(1997, 6,26),
@@ -118,7 +118,7 @@ public class Generator {
                     rowling,
                     Set.of(fantasy, youngAdult),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/hp1.epub")).readAllBytes()));
 
             Book harryPotter2 = new Book("Harry Potter and the Chamber of Secrets",
                     LocalDate.of(1998, 7,2),
@@ -131,7 +131,7 @@ public class Generator {
                     rowling,
                     Set.of(fantasy, youngAdult),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/hp2.epub")).readAllBytes()));
 
             Book northernLights = new Book("Northern Lights",
                     LocalDate.of(1995, 7,9),
@@ -144,7 +144,7 @@ public class Generator {
                     pullman,
                     Set.of(fantasy, youngAdult),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/nl.epub")).readAllBytes()));
 
             Book lotr1 = new Book("The Fellowship of the Ring",
                     LocalDate.of(1954, 7,29),
@@ -157,7 +157,7 @@ public class Generator {
                     tolkien,
                     Set.of(fantasy),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/fotr.epub")).readAllBytes()));
 
             Book lotr2 = new Book("The Two Towers",
                     LocalDate.of(1954, 11,11),
@@ -170,7 +170,7 @@ public class Generator {
                     tolkien,
                     Set.of(fantasy),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/tt.epub")).readAllBytes()));
 
             Book got = new Book("A Game of Thrones",
                     LocalDate.of(1996, 8,1),
@@ -183,7 +183,7 @@ public class Generator {
                     martin,
                     Set.of(fantasy),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/got.epub")).readAllBytes()));
 
             Book gatsby = new Book("The Great Gatsby",
                     LocalDate.of(1925, 4, 10),
@@ -196,7 +196,7 @@ public class Generator {
                     fitz,
                     Set.of(classics, romance),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/gg.epub")).readAllBytes()));
 
             Book meta = new Book("The Metamorphosis",
                     LocalDate.of(1915, 1, 1),
@@ -210,7 +210,7 @@ public class Generator {
                     kafka,
                     Set.of(classics, fantasy),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/meta.epub")).readAllBytes()));
 
             Book oldMan = new Book("The Old Man and the Sea",
                     LocalDate.of(1952, 9, 1),
@@ -223,7 +223,7 @@ public class Generator {
                     hemming,
                     Set.of(classics, adv),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/omats.epub")).readAllBytes()));
 
             Book dune = new Book("Dune",
                     LocalDate.of(1965, 6, 1),
@@ -237,7 +237,7 @@ public class Generator {
                     herbert,
                     Set.of(fantasy, sciFi, classics, adv),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/dune.epub")).readAllBytes()));
 
             Book dune2 = new Book("Dune Messiah",
                     LocalDate.of(1969, 7, 1),
@@ -250,7 +250,7 @@ public class Generator {
                     herbert,
                     Set.of(fantasy, sciFi, classics),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/mess.epub")).readAllBytes()));
 
             Book dune3 = new Book("Children of Dune",
                     LocalDate.of(1976, 4, 21),
@@ -264,7 +264,7 @@ public class Generator {
                     herbert,
                     Set.of(fantasy, sciFi, classics),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/cod.epub")).readAllBytes()));
 
             Book dorian = new Book("The Picture of Dorian Gray",
                     LocalDate.of(1980, 7, 1),
@@ -277,7 +277,7 @@ public class Generator {
                     wilde,
                     Set.of(fantasy, classics, horror),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/grey.epub")).readAllBytes()));
 
             Book animal = new Book("Animal Farm",
                     LocalDate.of(1945, 8, 17),
@@ -291,7 +291,7 @@ public class Generator {
                     orwell,
                     Set.of(fantasy, classics, pol),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/anfarm.epub")).readAllBytes()));
 
             Book nineteen = new Book("1984",
                     LocalDate.of(1949, 7, 8),
@@ -304,7 +304,7 @@ public class Generator {
                     orwell,
                     Set.of(classics, sciFi, pol),
                     new HashSet<>(),
-                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/book/sample1.epub")).readAllBytes()));
+                    new SerialBlob(Objects.requireNonNull(getClass().getResourceAsStream("/static/epub/1984.epub")).readAllBytes()));
             bookService.createAll(new Book[]{it, harryPotter1, harryPotter2, northernLights, lotr1,
                     lotr2, got, gatsby, meta, oldMan, dune, dune2, dune3, dorian, animal, nineteen});
 

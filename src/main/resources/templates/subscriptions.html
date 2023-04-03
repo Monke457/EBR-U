@@ -12,25 +12,29 @@
     <!-- subs results -->
     <div class="section-wrapper">
         <h4 class="section-head">Subscriptions</h4>
-        <div th:switch="${results}">
-            <span th:case="null">No results found</span>
-
-            <div th:case="*">
-                <div class="grid-main">
-                    <div class="grid-card c-large" th:each="sub : ${results}">
-                        <a class="l-no-dec l-no-color" th:href="@{/books/{id}(id=${sub.book.id})}">
-                            <div class="book-cover-wrapper">
-                                <img class="book-cover" th:src="@{/books/{id}/cover(id=${sub.book.id})}" th:alt="${sub.book.title}">
-                            </div>
-                        </a>
-                        <form th:action="@{/subscriptions/{id}(id=${sub.id})}" method="post">
-                            <input type="submit" name="submit" class="book-button unsub b-small" th:value="Unsub">
-                        </form>
-                        <a class="book-button sub b-small" th:href="@{/subscriptions/{id}/read(id=${sub.id})}">Read</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <table class="user-table">
+            <tr>
+                <th>Book</th>
+                <th></th>
+                <th class="desktop-table">Date Opened</th>
+                <th class="desktop-table">Date Closed</th>
+                <th>Fee</th>
+            </tr>
+            <tr th:each="item : ${results}">
+                <td><div class="img-wrapper"><img class="table-image" th:src="@{/books/{id}/cover(id=${item.book.id})}" th:alt="${item.book.title}"></div></td>
+                <td th:text="${item.book.title}"></td>
+                <td class="desktop-table" th:text="${item.dateOpened}"></td>
+                <td class="desktop-table" th:text="${item.dateClosed}"></td>
+                <td th:text="${#numbers.formatDecimal(item.getFee(), 0, 2)}"></td>
+                <td th:unless="${item.isClosed()}"><a class="book-button sub b-small" th:href="@{/subscriptions/{id}/read(id=${item.id})}">Read</a></td>
+                <td th:if="${item.isClosed()}"><a class="book-button sub b-small" th:href="@{/books/{id}(id=${item.book.id})}">View</a></td>
+                <td th:unless="${item.isClosed()}">
+                    <form th:action="@{/subscriptions/{id}(id=${item.id})}" method="post">
+                        <input type="submit" name="submit" class="book-button unsub b-small" th:value="Unsub">
+                    </form>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 

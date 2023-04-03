@@ -1,31 +1,23 @@
 package com.bsfh.EBR.helper;
 
-import com.bsfh.EBR.model.BlobFile;
-import com.bsfh.EBR.service.DBService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.SQLException;
 
 @Component
-public class BlobConverter implements Converter<MultipartFile, BlobFile> {
-    private final DBService<BlobFile> service;
-
-    public BlobConverter(DBService<BlobFile> service) {
-        this.service = service;
-    }
+public class BlobConverter implements Converter<MultipartFile, Blob> {
 
     @Override
-    public BlobFile convert(MultipartFile file) {
+    public Blob convert(MultipartFile file) {
         if(!file.isEmpty()) {
             try {
-                BlobFile bf = new BlobFile(file.getOriginalFilename(), file.getContentType(), new SerialBlob(file.getBytes()), null);
-                service.create(bf);
-                return bf;
-
+                Blob blob = new SerialBlob(file.getBytes());
+                return blob;
             } catch (IOException | SQLException ex) {
                 ex.printStackTrace();
             }

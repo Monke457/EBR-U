@@ -22,7 +22,6 @@ table {
 }
 
 th {
-    font-size: 16px;
     background-color: var(--accent-color);
     color: white;
 }
@@ -35,6 +34,10 @@ th, td {
 
 tr:hover {
     background-color: #d3ccc0;
+}
+
+.user-table th, .user-table td {
+    border: none;
 }
 
 .edit-button {
@@ -102,8 +105,16 @@ input::-webkit-inner-spin-button {
     justify-content: space-between;
     align-items: center;
     height: 50px;
-    background-color: #152323;
-    color: #fffee9;
+    background-color: var(--accent-color);
+}
+
+.header-bar span {
+    color: var(--main-color);
+}
+
+.header-bar a {
+    color: var(--main-color) !important;
+    -webkit-text-fill-color: var(--main-color) !important;
 }
 
 .sticky {
@@ -135,7 +146,7 @@ input::-webkit-inner-spin-button {
     font-family: roboto;
     font-weight: bold;
     background: var(--accent-main);
-    color: white;
+    color: var(--main-color);
     border: none;
     padding: 5px 10px;
     cursor: pointer;
@@ -189,7 +200,7 @@ input::-webkit-inner-spin-button {
 
 .c-large {
     display: block;
-    margin-bottom: 30px;
+    margin-bottom: 50%;
 }
 
 .list-grid {
@@ -273,10 +284,10 @@ input::-webkit-inner-spin-button {
 }
 
 .b-small {
-    padding: 5px 0;
+    padding: 5px 15px;
     text-align: center;
     font-size: 12px;
-    width: 100%;
+    min-width: 0;
 }
 
 .book-main {
@@ -400,7 +411,7 @@ input::-webkit-inner-spin-button {
 .submit-button {
     font-family: roboto;
     font-weight: bold;
-    background: #152323;
+    background: var(--accent-color);
     color: white;
     padding: 10px 15px;
     margin-top: 10px;
@@ -452,7 +463,7 @@ input::-webkit-inner-spin-button {
     font-size: 18px;
     padding: 5px;
     background-color: #182323;
-    color: #fffee9 !important;
+    color: var(--main-color) !important;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -476,9 +487,19 @@ input::-webkit-inner-spin-button {
 .footer {
     display: flex;
     justify-content: space-around;
-    background-color: #152323;
-    color: white;
+    background-color: var(--accent-color);
+    color: var(--main-color);
     padding:30px 0;
+}
+
+.footer p {
+    font-family: sans-serif !important;
+    color: var(--main-color);
+}
+
+.footer a {
+     color: var(--main-color) !important;
+    -webkit-text-fill-color: var(--main-color) !important;
 }
 
 .footer-list {
@@ -523,6 +544,15 @@ input::-webkit-inner-spin-button {
     margin-bottom: 10px;
     align-items: center;
     cursor: pointer;
+}
+
+.epub svg, .epub img, .epub audio {
+    display: none;
+}
+
+.epub a {
+    pointer-events: none;
+    text-decoration: none;
 }
 
 @media only screen and (max-width:1080px) {

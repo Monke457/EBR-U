@@ -5,6 +5,7 @@ import com.bsfh.EBR.model.Book;
 import com.bsfh.EBR.model.Customer;
 import com.bsfh.EBR.model.Subscription;
 import com.bsfh.EBR.service.DBService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;

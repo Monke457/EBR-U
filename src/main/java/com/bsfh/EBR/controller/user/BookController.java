@@ -8,10 +8,12 @@ import com.bsfh.EBR.model.Subscription;
 import com.bsfh.EBR.model.helper.SearchData;
 import com.bsfh.EBR.service.DBService;
 import jakarta.servlet.http.HttpServletResponse;
+import nl.siegmann.epublib.epub.EpubReader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -27,15 +29,13 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/books")
 public class BookController extends AbstractController<Book> {
 
-    private DBService<Subscription> subService;
-    private DBService<Book> bookService;
-    private DBService<BlobFile> blobService;
+    private final DBService<Subscription> subService;
+    private final DBService<Book> bookService;
 
     public BookController(AuthUser user, DBService<Book> bookService, DBService<BlobFile> blobService, DBService<Subscription> subService) {
         super(user, bookService, Book.class, "title");
 
         this.bookService = bookService;
-        this.blobService = blobService;
         this.subService = subService;
     }
 
@@ -89,8 +89,7 @@ public class BookController extends AbstractController<Book> {
         addSimilarBooks(model, book);
         model.addAttribute("result", book);
         model.addAttribute("subscription", subscription);
-        model.addAttribute("searchData", new SearchData());
-        model.addAttribute("user", user.getUser());
+        addGlobalAttributes(model);
 
         return "books";
     }
@@ -103,8 +102,7 @@ public class BookController extends AbstractController<Book> {
 
         model.addAttribute("result", book);
         model.addAttribute("similar", books);
-        model.addAttribute("searchData", new SearchData());
-        model.addAttribute("user", user.getUser());
+        addGlobalAttributes(model);
 
         return "books";
     }
