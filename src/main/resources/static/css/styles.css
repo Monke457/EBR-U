@@ -9,6 +9,10 @@ body {
     font-weight: bold;
     margin: 0;
     background: var(--main-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 a {
